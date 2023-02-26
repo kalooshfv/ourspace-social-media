@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Log In</title>
+<style>
+    a {
+        text-decoration: none;
+    }
+
+    .form-control {
+        background-color: rgba(255,0,255, 0.5); 
+        color: pink;
+    }
+
+    label {
+        color: white;
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
+    .row, col {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+
+    .form-group {
+        padding-bottom: 1em;
+    }
+
+    .btn {
+    opacity: 80%;
+    background-color: rgba(255,0,255, 0.5);
+  }
+
+    .btn:hover {
+        opacity: 80%;
+        background-color: rgba(248, 200, 220, 0.5);
+    }
+
+    .btn:active {
+        filter: brightness(85%);
+    }
+
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+$('#login-form').submit(async function(event) {
+  // Prevent the form from submitting normally
+  event.preventDefault();
+  // Get the form data as a FormData object
+  const formData = new FormData(this);
+
+  try {
+    const response = await $.ajax({
+      url: "{% url 'backend:login' %}",
+      method: 'POST',
+      data: {
+        username: formData.get('username'),
+        password: formData.get('password')
+      },
+      headers: {
+        'Authorization': 'Basic ' + btoa(formData.get('username') + ':' + formData.get('password')),
+      },
+    });
+
+    // If the response is not OK (status code 200-299), throw an error
+    if (response.status === 401) {
+      throw new Error('Error logging in');
+    }
+
+    // If the response is OK, display a success message to the user
+    console.log('Logged in successfully');
+    window.location.replace('/homepage/');
+  } catch (error) {
+    // If there was an error, display an error message to the user
+    console.error(error);
+    alert('There was an error logging in. Please check your username and password.');
+  }
+})});
+
+</script>
+{% endblock meta %}
+
+{% block content %}
+<div class="container-fluid text-center">
+    <div class="container mt-5">
+        <h1 style="font-family:'Segoe UI' sans-serif; color:white; font-size: 30px;">LOG IN</h1>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card border-0" style="background-color: rgba(255, 191, 234, 0.2)">
+              <div class="card-body">
+                <form method="POST" id="login-form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="username"><h3>Username</h3></label>
+                    <input type="text" class="form-control rounded" id="username" name="username" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="password"><h3>Password</h3></label>
+                    <input type="password" class="form-control rounded" id="password" name="password" required>
+                  </div>
+                  <button type="submit" class="btn btn-outline-light btn-block w-100" style="padding-top: 1rem"><h2 style="font-family:system-ui; color:rgba(230,230,250, 0.5)">Login</h2></button>
+                </form>
+                <div class="text-center mt-4">
+                  <a href="{% url 'frontend:register_page' %}"><p style="font-size:15px; text-decoration: none; color:white">Don't have an account? Register here</p></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+{% endblock content %}

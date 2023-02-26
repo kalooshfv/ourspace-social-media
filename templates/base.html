@@ -6,13 +6,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href=
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" 
+    crossorigin="anonymous">
   {% block meta %}
   {% endblock meta %}
 </head>
 
 <body>
-  {% block content %}
-  {% endblock content %}
-</body>
+  <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-m-3">
+      <div class="container">
+        <a href="{% url 'frontend:landing' %}" class="navbar-brand" style="font-family:'Haettenschweiler'; font-size:30px;">OurSpace</a>
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-bs-target="$navbarNav"
+          data-bs-toggle="collapse"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-lable="Toggle Navbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="mx-auto"></div>
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item justify-content-center align-items-center">
+              <a href="{% url 'frontend:logout' %}" class="nav-link text-white px-4"><p><b>Log Out</b></p></a>
+            </li>
+            <li class="nav-item justify-content-center align-items-center">
+              <a href="{% url 'frontend:homepage' %}" class="nav-link text-white px-4"><p><b>Homepage</b></p></a>
+            </li>
+            {% else %}
+            <li class="nav-item justify-content-center align-items-center">
+              <a href="{% url 'frontend:login_page' %}" class="nav-link text-white px-4"><p><b>Log In</b></p></a>
+            </li>
+            <li class="nav-item justify-content-center align-items-center">
+              <a href="{% url 'frontend:register_page' %}" class="nav-link text-white px-4"><p><b>Sign Up</b></p></a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Background -->
+    <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center">
+      <!-- Content-->
+      {% block content %}
+      {% endblock content %}
+    </div>
+
+    <script>
+      var nav = document.querySelector('nav');
+
+      window.addEventListener('scroll', function() {
+        if (wind.ow.pageYOffset > 100) {
+          nav.style.opacity = 0;
+        } else {
+          nav.style.opacity = 100;
+        }
+      });
+    </script>
+</body>
 </html>

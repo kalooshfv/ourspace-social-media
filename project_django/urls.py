@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from backend.views import *
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('example_app.urls')),
+    path('api/', include('backend.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('', include('frontend.urls')),
 ]

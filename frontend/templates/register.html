@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Register</title>
+<style>
+    a {
+        text-decoration: none;
+    }
+
+    .form-control {
+        background-color: rgba(255,0,255, 0.5); 
+        color: pink;
+    }
+
+    label, .profImage {
+        color: white;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+
+    .row, col {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
+    .form-group {
+        padding-bottom: 0.2em;
+    }
+
+    .btn {
+        opacity: 80%;
+        background-color: rgba(255,0,255, 0.5);
+    }
+
+    .btn:hover {
+        opacity: 80%;
+        background-color: rgba(248, 200, 220, 0.5);
+    }
+
+    .btn:active {
+        filter: brightness(85%);
+    }
+
+    .upload-btn-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .upload-btn-wrapper input[type=file] {
+      font-size: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  
+function previewImage(event) {
+  var reader = new FileReader();
+  reader.onload = function() {
+    var preview = document.getElementById('preview');
+    preview.src = reader.result
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+
+$(document).ready(function() {
+  $('#register-form').submit(function(event) {
+  // Prevent the form from submitting normally
+    event.preventDefault();
+    // Get the form data as a FormData object
+    const formData = new FormData(this);
+
+    // Make an AJAX request to the backend API to create a new user
+    $.ajax({
+      url: "{% url 'backend:register' %}",
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function() {
+        // If the response is OK, redirect the user to the login page
+        window.location.href = '/login_page/';
+      },
+      error: function() {
+        // If there was an error, display an error message to the user
+        alert('There was an error creating your account. Please try again.');
+      }
+    });
+  });
+});
+</script>
+{% endblock meta %}
+
+{% block content %}
+<div class="container-fluid text-center">
+    <div class="container">
+        <h1 style="font-family:'Segoe UI' sans-serif; color:white;">REGISTER</h1>
+        <div class="row justify-content-center">
+          <div class="col my-auto mx-auto">
+            <div class="card border-0" style="background-color: rgba(255, 191, 234, 0.2);">
+              <div class="card-body">
+                <form method="POST" id="register-form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <!--<div class="form-group">
+                    <label for="email"><h4>Email Address</h4></label>
+                    <input type="email" class="form-control rounded" id="email" name="email" required>
+                  </div>-->
+                  <div class="form-group">
+                    <label for="username"><h4>Username</h4></label>
+                    <input type="text" class="form-control rounded" id="username" name="username" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="password"><h4>Password</h4></label>
+                    <input type="password" class="form-control rounded" id="password" name="password" required>
+                  </div>
+                  <div class="form-group">
+                    <div class="profImage"><h4>Profile Image</h4></div>              
+                    <div class="upload-btn-wrapper">
+                      <button class="btn">Upload a file</button>
+                      <input type="file" onchange="previewImage(event)" class="custom-file-input" id="image" name="image" accept="image/*" required>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-outline-light btn-block w-100" style="padding-top: 1rem"><h2 style="font-family:system-ui; color:rgba(230,230,250, 0.5)">Register</h2></button>
+                </form>
+                <div class="text-center mt-4">
+                  <a href="{% url 'frontend:register_page' %}"><p style="font-size:15px; text-decoration: none; color:white">Don't have an account? Register here</p></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col d-flex justify-content-center align-items-center">
+            <div class="card border-0" style="background-color: rgba(255, 191, 234, 0.2)">
+              <div class="card-body">
+                <img src="/static/image/default.png" id="preview" alt="Image preview" style="object-fit: contain; max-height: 80%; max-width:80%; border-radius: 50%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}

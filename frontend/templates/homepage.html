@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>OurSpace Homepage</title>
+<style>
+  a {
+    text-decoration: none;
+  }
+
+  img {
+    height: 100%; width: 90%; object-fit: contain; border-radius: 50%; 
+  }
+ 
+  .col::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .col {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+
+  .btn {
+    opacity: 80%;
+    background-color: rgba(255,0,255, 0.5);
+  }
+
+  .btn:hover {
+    opacity: 80%;
+    background-color: rgba(248, 200, 220, 0.5);
+  }
+
+  .btn:active {
+    filter: brightness(85%);
+  }
+
+  .row, col {
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+
+  #profilePic {
+    transition: 0.9s;
+  }
+
+  #profilePic:hover {
+    opacity: 0.5;
+  }
+
+  #profilePic:active {
+    opacity: 1;
+    filter: brightness(85%);
+  }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  let filtered = false;
+let creatingPost = false;
+
+$(document).ready(function() {
+    refresh();
+})
+
+async function get_posts() {
+if (filtered == true) {
+    return fetch("/api/posts/{{user.pk}}").then((res) => res.json())
+} else {
+    return fetch("{% url 'backend:posts' %}").then((res) => res.json())
+}};
+
+async function refresh() {
+document.getElementById("displayWindow").innerHTML = "";
+const posts = await get_posts();
+    let html_string = "";
+    posts.data.forEach((post) => {
+    if (post.creator_username == "{{user.username}}") {
+        footer =
+        `
+        <div class="row">
+        <div class="col mx-auto"><button onclick="editMode(${post.id})" class="btn btn-outline-light btn-block w-100"style="background-color: rgba(255,0,255, 0.5);"">Edit this post!</button></div>
+        <div class="col mx-auto"><button onclick="deletePost(${post.id})" class="btn btn-outline-light btn-block w-100"style="background-color: rgba(255,0,255, 0.5);"">Delete this post!</button></div>
+        </div>
+        `
+    } else {
+        footer =
+        `
+        
+        `
+    }
+    html_string +=
+    `
+    <div id="post-${post.id}" class="row rounded mx-auto my-2" 
+        style="padding-bottom: 1em; padding-top: 1em; background-color: rgba(255,0,255, 0.5); outline: pink;">
+        <div class="col-3">
+        <img src="/media/${post.creator_image}" style='object-fit: cover'/>
+        </div>
+        <div class="col mx-auto justify-content-center">
+        <div class="card w-100" style="opacity: 0.8">
+            <div class="card-body h-100">
+            <h5 class="card-title">${post.creator_username} said...</h5>
+            <h6 class="card-subtitle mb-2 text-muted">On ${post.date}...</h6>
+            <p id="post-${post.id}-content" class="card-text">
+            ${post.content}
+            </p>
+            </div>
+            <div id="post-${post.id}-footer" class="card-footer text-muted">
+            ${footer}
+            </div>
+        </div>
+        </div>
+    </div>
+    `
+    });
+    document.getElementById("displayWindow").innerHTML = html_string;
+};
+
+
+async function editMode(id) {
+document.getElementById("post-" + id + "-content").innerHTML =
+`
+<textarea class="form-control rounded" 
+    id="post-${id}-fill" style="background-color: rgba(255,0,255, 0.5); color: white;">
+</textarea>
+`
+document.getElementById("post-" + id + "-footer").innerHTML =
+`
+<div class="col mx-auto"><button onclick="editPost(${id})" class="btn btn-outline-light btn-block w-100"style="background-color: rgba(255,0,255, 0.5);"">Finish editing!</button></div>
+`
+}
+
+async function editPost(id) {
+event.preventDefault()
+
+const new_content = $("#post-" + id + "-fill").val();
+const csrftoken = $("[name=csrfmiddlewaretoken]").val();
+console.log(new_content)
+
+$.ajax({
+    url: "{% url 'backend:posts' %}" + id,
+    method: 'PATCH',
+    headers: {
+    'X-CSRFToken': csrftoken
+    },
+    data: {
+    content: new_content,
+    },
+    success: function(response) {
+    console.log(response);
+    $('#PostContent').val('');
+    refresh();
+    },
+    error: function(xhr, errmsg, err) {
+    console.log(xhr.status + ": " + xhr.responseText);
+    }
+})
+refresh();
+}
+
+
+
+async function createPost() {
+event.preventDefault();
+
+if (creatingPost) {
+    return; 
+}
+
+const content = $('#post-content').val();
+const csrftoken = $("[name=csrfmiddlewaretoken]").val();
+
+creatingPost = true; 
+
+try {
+    const response = await $.ajax({
+    url: "{% url 'backend:posts' %}",
+    method: 'POST',
+    headers: {
+        'X-CSRFToken': csrftoken
+    },
+    data: {
+        content: content,
+    },
+    });
+
+    console.log(response);
+    $('#post-content').val('');
+    refresh();
+} catch (error) {
+    console.log(error.status + ": " + error.responseText);
+} finally {
+    creatingPost = false;
+}
+};
+
+async function filterPost() {
+filtered = !filtered
+console.log(filtered)
+if (filtered == true) {
+    refresh();
+    document.getElementById("filter-post").innerHTML = "MY <br> POSTS";
+} else if (filtered == false) {
+    refresh();
+    document.getElementById("filter-post").innerHTML = "ALL <br> POSTS";
+}
+};
+
+async function deletePost(id) {
+const csrftoken = $("[name=csrfmiddlewaretoken]").val();
+
+try {
+    const response = await $.ajax({
+        url: "{% url 'backend:posts' %}" + id,
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    });
+    refresh();
+} catch (error) {
+    console.log(error);
+}
+}
+</script>
+{% endblock meta %}
+
+{% block content %}
+<div class="col my-auto" style="overflow-y:scroll; height: 80%; padding-top: 2.5%; padding-left:2%">
+  <div class="container-fluid text-center" style="width:80%;">
+    <div class="row mx-auto" style="width:95%;">
+      <div class="col-4 d-flex" id = "user-image">
+        <img src="{{ user.image.url }}" style='height: 100%; width: 100%; object-fit: contain'/>
+      </div>
+      <div class="col d-flex justify-content-center" id = "user-name">
+        <h1 style="font-family:'Franklin Gothic Medium', sans-serif; color:white; font-size: 3rem; padding-top: 5%;">Welcome,<br> {{ user.username }}!</h1>
+      </div>
+    </div>
+    <div class="row my-1 mx-auto">
+      <div class="row my-1 mx-auto">
+        <form method="POST">
+          {% csrf_token %}
+        <textarea class="form-control rounded" 
+            id="post-content" rows="6" style="background-color: rgba(255,0,255, 0.5); color: pink;">
+        </textarea>
+      </div>
+      <div class="row my-1 mx-auto">
+        <button onclick = "createPost()" class="btn btn-outline-light btn-block w-100";>
+          <h1 style="font-family:system-ui; color:rgba(230,230,250, 0.5)">POST</h1>
+        </button>
+      </form>
+      </div>
+      <div class="row my-1 mx-auto">
+        <div class="col mx-auto">
+          <button onclick="filterPost()"class="btn btn-outline-light btn-block w-100";>
+            <h2 style="font-family:system-ui; color:rgba(230,230,250, 0.5)">MY <br> POSTS</h1>
+          </button>
+        </div>
+        <div class="col mx-auto" id="edit-profile-button">
+          <a href="{% url 'frontend:edit_profile' %}"><button class="btn btn-outline-light btn-block w-100";>
+            <h2 style="font-family:system-ui; color:rgba(230,230,250, 0.5)">EDIT <br> PROFILE</h1></a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col my-auto" style="overflow-y:scroll; height: 80%; padding-right:5%;" id="displayWindow">
+  <!-- Cards here-->
+</div>
+{% endblock content %}

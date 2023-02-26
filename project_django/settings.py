@@ -40,6 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'example_app',
+
+    'backend',
+    'frontend',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +91,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 if PRODUCTION:
     DATABASES['default'] = dj_database_url.config(
@@ -137,3 +147,22 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directory where uploaded media is saved.
+MEDIA_URL = '/media/' # Public URL at the browser
+
+AUTH_USER_MODEL = 'backend.CustomUser'
+SITE_ID = 1
