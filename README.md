@@ -4,8 +4,7 @@ OurSpace is an application to a university organization named "RISTEK" in the fo
 
 ## Installation
 
-If you want to use the code template in this repository as a starter code for
-developing a Django Web application:
+Follow these steps for installation on a local machine:
 
 
 1. Clone the new Django template repository from your GitHub account to a
@@ -23,14 +22,8 @@ developing a Django Web application:
    cd <path to the cloned repository>
    ```
 
-3. Create a Python virtual environment named `env` inside the cloned repository
-   by using Python's `venv` module:
 
-   ```shell
-   python -m venv env
-   ```
-
-4. Activate the virtual environment:
+3. Activate the virtual environment:
 
    ```shell
    # Windows
@@ -39,7 +32,7 @@ developing a Django Web application:
    source env/bin/activate
    ```
 
-5. Verify the virtual environment has been activated by looking at the prompt
+4. Verify the virtual environment has been activated by looking at the prompt
    of your shell. Make sure there is a `env` prefix in your shell. For example:
 
    ```shell
@@ -49,25 +42,25 @@ developing a Django Web application:
    (env) kalooshverrell@ubuntu:~/my-django-app
    ```
 
-6. Install the dependencies needed to build, test, and run the application:
+5. Install the dependencies needed to build, test, and run the application:
 
    ```shell
    pip install -r requirements.txt
    ```
 
-7. Load the initial data to the application:
+6. Load the initial data to the application:
     ```shell
     python manage.py loaddata initial_custom_user.json
     python manage.py loaddata initial_posts.json
     ```
 
-8. Run the Django Web application using local development server:
+7. Run the Django Web application using local development server:
 
    ```shell
    python manage.py runserver
    ```
 
-9. Open http://localhost:8000 in your favourite Web browser to see if the Web
+8. Open http://localhost:8000 in your favourite Web browser to see if the Web
    application is running.
 
 
@@ -78,7 +71,7 @@ be fixed or executed on time.
 
 1. No friend request feature
 2. Not deployed
-3. Image stretching at several intervals in the homepage and register preview
+3. Image stretching at several intervals in the homepage and register preview if not uploaded in 1x1 format
 4. Still using Session Authentication instead of Token Authentication
 5. Empty footer on posts not belonging to the user (meant for friend request feature)
 6. No TDD
