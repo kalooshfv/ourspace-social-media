@@ -6,7 +6,6 @@ from .models import *
 from django.shortcuts import get_object_or_404
 from rest_framework.authentication import *
 from rest_framework.permissions import *
-from .forms import *
 from rest_framework import *
 from rest_framework import generics
 from rest_framework.response import Response
