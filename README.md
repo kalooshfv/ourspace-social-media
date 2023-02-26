@@ -77,7 +77,8 @@ be fixed or executed on time.
 5. Empty footer on posts not belonging to the user (meant for friend request feature)
 6. No TDD
 7. Possible double clicking on jQuery-activated buttons, causing error messages to show up
-8. and many more...
+8. Not responsive (apart from innate responsiveness from Bootstrap)
+9. and many more...
 
 ## Thank You
 
