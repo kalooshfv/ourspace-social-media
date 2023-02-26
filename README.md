@@ -22,8 +22,7 @@ Follow these steps for installation on a local machine:
    cd <path to the cloned repository>
    ```
 
-
-3. Activate the virtual environment:
+3. (Optional) Activate the virtual environment:
 
    ```shell
    # Windows
@@ -32,36 +31,39 @@ Follow these steps for installation on a local machine:
    source env/bin/activate
    ```
 
-4. Verify the virtual environment has been activated by looking at the prompt
-   of your shell. Make sure there is a `env` prefix in your shell. For example:
-
-   ```shell
-   # Windows using `pwsh` shell
-   (env) PS C:\Users\KalooshVerrell\my-django-app
-   # Linux/Unix, e.g. Ubuntu using `bash` shell
-   (env) kalooshverrell@ubuntu:~/my-django-app
-   ```
-
-5. Install the dependencies needed to build, test, and run the application:
+4. Install the dependencies needed to build, test, and run the application:
 
    ```shell
    pip install -r requirements.txt
    ```
 
-6. Load the initial data to the application (P.S. fixtures use UTF-8 encoding):
+5. If there are dependencies not caught by the previous command:
+
+   ```shell
+   pip install <module name>
+   ```
+
+6. Run the migrations.:
+
+   ```shell
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+7. Load the initial data to the application (P.S. fixtures use UTF-8 encoding, and make sure this command is executed in the repository directory):
 
     ```shell
     python manage.py loaddata initial_custom_user.json
     python manage.py loaddata initial_posts.json
     ```
 
-7. Run the Django Web application using local development server:
+8. Run the Django Web application using local development server:
 
    ```shell
    python manage.py runserver
    ```
 
-8. Open http://localhost:8000 in your favourite Web browser to see if the Web
+9. Open http://localhost:8000 in your favourite Web browser to see if the Web
    application is running.
 
 
@@ -78,7 +80,8 @@ be fixed or executed on time.
 6. No TDD
 7. Possible double clicking on jQuery-activated buttons, causing error messages to show up
 8. Not responsive (apart from innate responsiveness from Bootstrap)
-9. and many more...
+9. When testing with other devices, some modules weren't caught by 'pip install -r requirements.txt'. Examples: django, django-allauth, dj-rest-auth, django-all-auth, Pillow, whitenoise.
+10. and many more...
 
 ## Thank You
 
