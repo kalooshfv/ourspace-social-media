@@ -1,0 +1,11 @@
+[
+    {
+        "model": "backend.post",
+        "pk": 1,
+        "fields": {
+            "content": "Hello! Try posting something; it'll appear here!",
+            "creator": 1,
+            "date": "2023-02-26"
+        }
+    }
+]

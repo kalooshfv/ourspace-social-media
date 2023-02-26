@@ -1,0 +1,17 @@
+[
+    {
+        "model": "backend.customuser",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$390000$98J3KnPByB8wIWkBSu39dU$AcEhV4PF3DuTu2IZ8oR3Q+q3bysMJdBvPZsu5Wy6/QU=",
+            "last_login": "2023-02-26T12:31:52.202Z",
+            "is_superuser": false,
+            "username": "Kaloosh Falito Verrell",
+            "image": "image/1_to_1.jpg",
+            "is_active": true,
+            "is_staff": false,
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]
