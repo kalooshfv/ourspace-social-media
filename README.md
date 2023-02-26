@@ -48,7 +48,8 @@ Follow these steps for installation on a local machine:
    pip install -r requirements.txt
    ```
 
-6. Load the initial data to the application:
+6. Load the initial data to the application (P.S. fixtures use UTF-8 encoding):
+
     ```shell
     python manage.py loaddata initial_custom_user.json
     python manage.py loaddata initial_posts.json
