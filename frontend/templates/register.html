@@ -99,17 +99,13 @@ $(document).ready(function() {
 {% block content %}
 <div class="container-fluid text-center">
     <div class="container">
-        <h1 style="font-family:'Segoe UI' sans-serif; color:white;">REGISTER</h1>
+        <h1 style="font-family:'Franklin Gothic Medium' sans-serif; color:white; padding-top: 2%;">REGISTER</h1>
         <div class="row justify-content-center">
           <div class="col my-auto mx-auto">
             <div class="card border-0" style="background-color: rgba(255, 191, 234, 0.2);">
               <div class="card-body">
                 <form method="POST" id="register-form" enctype="multipart/form-data">
                   {% csrf_token %}
-                  <!--<div class="form-group">
-                    <label for="email"><h4>Email Address</h4></label>
-                    <input type="email" class="form-control rounded" id="email" name="email" required>
-                  </div>-->
                   <div class="form-group">
                     <label for="username"><h4>Username</h4></label>
                     <input type="text" class="form-control rounded" id="username" name="username" required>
