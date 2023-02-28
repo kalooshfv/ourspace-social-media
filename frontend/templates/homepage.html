@@ -198,13 +198,13 @@ try {
 async function filterPost() {
 filtered = !filtered
 console.log(filtered)
-if (filtered == true) {
-    refresh();
-    document.getElementById("filter-post").innerHTML = "MY <br> POSTS";
-} else if (filtered == false) {
-    refresh();
-    document.getElementById("filter-post").innerHTML = "ALL <br> POSTS";
-}
+  if (filtered == true) {
+      refresh();
+      document.getElementById("filter-post").innerHTML = "MY <br> POSTS";
+  } else if (filtered == false) {
+      refresh();
+      document.getElementById("filter-post").innerHTML = "ALL <br> POSTS";
+  }
 };
 
 async function deletePost(id) {
@@ -254,7 +254,7 @@ try {
       <div class="row my-1 mx-auto">
         <div class="col mx-auto">
           <button onclick="filterPost()"class="btn btn-outline-light btn-block w-100";>
-            <h2 style="font-family:system-ui; color:rgba(230,230,250, 0.5)">MY <br> POSTS</h1>
+            <h2 id="filter-post" style="font-family:system-ui; color:rgba(230,230,250, 0.5)">MY <br> POSTS</h1>
           </button>
         </div>
         <div class="col mx-auto" id="edit-profile-button">
