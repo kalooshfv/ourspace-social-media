@@ -91,7 +91,7 @@ be fixed or executed on time.
 6. No TDD
 7. Possible double clicking on jQuery-activated buttons, causing error messages to show up
 8. Not responsive (apart from innate responsiveness from Bootstrap)
-9. When testing with other devices, some modules weren't caught by 'pip install -r requirements.txt'. Examples: django, django-allauth, dj-rest-auth, Pillow, whitenoise.
+9. When testing with other devices, some modules weren't caught by 'pip install -r requirements.txt'. Examples: django, django-allauth, dj-rest-auth, Pillow, whitenoise. Caused by not using a virtual environment when developing.
 10. and many more...
 
 ## Thank You
