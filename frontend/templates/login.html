@@ -49,11 +49,8 @@
 <script>
   $(document).ready(function() {
 $('#login-form').submit(async function(event) {
-  
   event.preventDefault();
-  
   const formData = new FormData(this);
-
   try {
     const response = await $.ajax({
       url: "{% url 'backend:login' %}",
@@ -66,13 +63,9 @@ $('#login-form').submit(async function(event) {
         'Authorization': 'Basic ' + btoa(formData.get('username') + ':' + formData.get('password')),
       },
     });
-
-    
     if (response.status === 401) {
       throw new Error('Error logging in');
     }
-
-    
     console.log('Logged in successfully');
     window.location.replace('/homepage/');
   } catch (error) {
