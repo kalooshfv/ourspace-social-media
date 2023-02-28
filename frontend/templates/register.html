@@ -70,12 +70,8 @@ function previewImage(event) {
 
 $(document).ready(function() {
   $('#register-form').submit(function(event) {
-  // Prevent the form from submitting normally
     event.preventDefault();
-    // Get the form data as a FormData object
     const formData = new FormData(this);
-
-    // Make an AJAX request to the backend API to create a new user
     $.ajax({
       url: "{% url 'backend:register' %}",
       type: 'POST',
@@ -83,11 +79,9 @@ $(document).ready(function() {
       processData: false,
       contentType: false,
       success: function() {
-        // If the response is OK, redirect the user to the login page
         window.location.href = '/login_page/';
       },
       error: function() {
-        // If there was an error, display an error message to the user
         alert('There was an error creating your account. Please try again.');
       }
     });

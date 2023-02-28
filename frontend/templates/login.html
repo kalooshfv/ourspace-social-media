@@ -49,9 +49,9 @@
 <script>
   $(document).ready(function() {
 $('#login-form').submit(async function(event) {
-  // Prevent the form from submitting normally
+  
   event.preventDefault();
-  // Get the form data as a FormData object
+  
   const formData = new FormData(this);
 
   try {
@@ -67,16 +67,16 @@ $('#login-form').submit(async function(event) {
       },
     });
 
-    // If the response is not OK (status code 200-299), throw an error
+    
     if (response.status === 401) {
       throw new Error('Error logging in');
     }
 
-    // If the response is OK, display a success message to the user
+    
     console.log('Logged in successfully');
     window.location.replace('/homepage/');
   } catch (error) {
-    // If there was an error, display an error message to the user
+    
     console.error(error);
     alert('There was an error logging in. Please check your username and password.');
   }
