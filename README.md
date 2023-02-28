@@ -42,6 +42,7 @@ Follow these steps for installation on a local machine:
    ```shell
    pip install <module name>
    ```
+   Generally, this involves: django, django-allauth, dj-rest-auth, Pillow, whitenoise.
 
 6. Run the migrations.:
 
@@ -66,6 +67,16 @@ Follow these steps for installation on a local machine:
 9. Open http://localhost:8000 in your favourite Web browser to see if the Web
    application is running.
 
+## Features
+
+These are the features included in the website.
+
+1. Register and Login: Standard register and login functions, with an additional profile picture field.
+2. Post a Post: Enter text into the text area and click the button "POST" to post a post into the post window.
+3. Edit a Post: Click on the edit button on one of your posts to edit your post; click "Finish Editing" to finish editing one of your posts.
+4. Delete a Post: Click on the delete button on of your posts to delete said post.
+5. Filter Posts: Filter between all posts and only your posts to show up in the post window.
+6. Edit Profile: Edit your profile username, password, and profile image.
 
 ## Known Issues
 
@@ -80,7 +91,7 @@ be fixed or executed on time.
 6. No TDD
 7. Possible double clicking on jQuery-activated buttons, causing error messages to show up
 8. Not responsive (apart from innate responsiveness from Bootstrap)
-9. When testing with other devices, some modules weren't caught by 'pip install -r requirements.txt'. Examples: django, django-allauth, dj-rest-auth, django-all-auth, Pillow, whitenoise.
+9. When testing with other devices, some modules weren't caught by 'pip install -r requirements.txt'. Examples: django, django-allauth, dj-rest-auth, Pillow, whitenoise. Caused by not using a virtual environment when developing.
 10. and many more...
 
 ## Thank You
