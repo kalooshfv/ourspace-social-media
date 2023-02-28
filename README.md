@@ -25,6 +25,7 @@ Follow these steps for installation on a local machine:
 3. (Optional) Activate the virtual environment:
 
    ```shell
+   python -m venv env
    # Windows
    .\env\Scripts\activate
    # Linux/Unix, e.g. Ubuntu, MacOS
@@ -87,7 +88,7 @@ be fixed or executed on time.
 2. Not deployed
 3. Image stretching at several intervals in the homepage and register preview if not uploaded in 1x1 format
 4. Still using Session Authentication instead of Token Authentication
-5. Empty footer on posts not belonging to the user (meant for friend request feature)
+5. No User bio (design choice, won't fit on left window)
 6. No TDD
 7. Possible double clicking on jQuery-activated buttons, causing error messages to show up
 8. Not responsive (apart from innate responsiveness from Bootstrap)
