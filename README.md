@@ -42,6 +42,7 @@ Follow these steps for installation on a local machine:
    ```shell
    pip install <module name>
    ```
+   Generally, this involves: django, django-all-auth, dj-rest-auth, Pillow, whitenoise.
 
 6. Run the migrations.:
 
